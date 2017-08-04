@@ -1,0 +1,14 @@
+body {
+    font-family: Helvetica, sans-serif;
+}
+#task {
+    width: 100%;
+    text-align: center;
+    font-size: 200px;
+}
+
+#footer {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
