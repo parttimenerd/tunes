@@ -6,7 +6,8 @@
 
     function newTask() {
         expectedNote = tunes.chooseRandomNote();
-        document.querySelector("#taskNote").innerHTML = expectedNote.name() + expectedNote.accidental();
+        document.querySelector("#task").innerHTML = `Play ${utils.chooseArticle(expectedNote.name2())}
+                                                    <span class="note">${expectedNote.name2()}</span>`
     }
 
     tunes.assignNoteChangedHandler(note => {

@@ -22,6 +22,13 @@ Requires you to play a note that is an given interval higher than the shown note
 *Located in interval.html*
 *[Play](http://mostlynerdless.de/tunes/interval.html)*
 
+Triad game
+-------------
+Requires you to play the notes of a triad.
+
+*Located in triad.html*
+*[Play](http://mostlynerdless.de/tunes/triad.html)*
+
 License
 -------
 MIT

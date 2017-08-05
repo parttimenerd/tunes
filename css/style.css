@@ -4,10 +4,14 @@ body {
 #task {
     width: 100%;
     text-align: center;
-    font-size: 200px;
+    font-size: 150px;
 }
 
-#footer {
+#taskNote, .note, .notes {
+    font-family: monospace !important;
+}
+
+#footer, #currentNote {
     width: 100%;
     text-align: center;
     margin-top: 20px;

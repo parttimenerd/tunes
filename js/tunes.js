@@ -188,6 +188,35 @@
         return this.intervals[Math.floor(Math.random() * this.intervals.length)]
     };
 
+    window.tunes.getInterval = function(name){
+        const nameParts = name.split(" ");
+        return this.intervals.filter(i => nameParts.includes(i.modifier) && nameParts.includes(i.baseName))[0];
+    };
+
+    window.tunes.setFooter = function(){
+        const urlParts = window.location.pathname.split("/");
+        let currentPage = urlParts[urlParts.length - 1];
+        if (!currentPage.endsWith(".html")){
+            currentPage = "index.html";
+        }
+        const pages = [
+            ["index.html", "note game"],
+            ["interval.html", "interval game"],
+            ["triad.html", "triad game"]];
+        const text = pages.filter(arr => arr[0] !== currentPage).map((arr) => `the <a href="${arr[0]}">${arr[1]}</a>`).join(" or ");
+        document.querySelector("#footer").innerHTML = `You might also want to play ${text}.`;
+    };
+
+    window.utils = {
+        chooseArticle: function(str){
+            if (['a', 'e', 'i', 'o', 'u'].includes(str.toLowerCase()[0])){
+                return "an";
+            }
+            return "a"
+        }
+    };
+
+    tunes.setFooter();
 
     initAudio();
 

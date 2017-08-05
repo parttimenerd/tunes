@@ -2,15 +2,19 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Note game</title>
+    <title>Triad game</title>
     <link rel="stylesheet" href="css/style.css"/>
     <script src="js/teoria.js"></script>
 </head>
 <body>
 <div id="task"></div>
+<div id="currentNote"></div>
 
 <div id="footer"></div>
 <script src="js/tunes.js"></script>
-<script src="js/note_game.js"></script>
+<script src="js/triad_game.js"></script>
+<script>
+    triads.initGame(new triads.TriadGame("task"), "currentNote");
+</script>
 </body>
 </html>
