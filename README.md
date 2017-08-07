@@ -13,27 +13,27 @@ Note game
 Requires you to play randomly chosen notes.
 
 *Located in index.html*
-*[Play](http://mostlynerdless.de/tunes/index.html)*
+*[Play](https://mostlynerdless.de/tunes/index.html)*
 
 Interval game
 -------------
 Requires you to play a note that is an given interval higher than the shown note.
 
 *Located in interval.html*
-*[Play](http://mostlynerdless.de/tunes/interval.html)*
+*[Play](https://mostlynerdless.de/tunes/interval.html)*
 
 Triad game
 -------------
 Requires you to play the notes of a triad.
 
 *Located in triad.html*
-*[Play](http://mostlynerdless.de/tunes/triad.html)*
+*[Play](https://mostlynerdless.de/tunes/triad.html)*
 
 Ukulele tabs
 ------------
 A tool that generates tabs for a given chord.
 
-*Located in uke_tabs.html* *[Use](http://mostlynerdless.de/tunes/uke_tabs.html)* 
+*Located in uke_tabs.html* *[Use](https://mostlynerdless.de/tunes/uke_tabs.html)* 
 
 License
 -------
