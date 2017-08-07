@@ -202,23 +202,133 @@
         const pages = [
             ["index.html", "note game"],
             ["interval.html", "interval game"],
-            ["triad.html", "triad game"]];
+            ["triad.html", "triad game"],
+            ["uke_tabs.html", "ukulele tabs for chords"]];
         const text = pages.filter(arr => arr[0] !== currentPage).map((arr) => `the <a href="${arr[0]}">${arr[1]}</a>`).join(" or ");
         document.querySelector("#footer").innerHTML = `You might also want to play ${text}.`;
     };
 
     window.utils = {
-        chooseArticle: function(str){
+        chooseArticle: function(str, capitalize=false){
             if (['a', 'e', 'i', 'o', 'u'].includes(str.toLowerCase()[0])){
-                return "an";
+                return capitalize ? "An" : "an";
             }
-            return "a"
+            return capitalize ? "A" : "a";
+        },
+        generatePermutations: function(inputArr, length=-1){
+            length = length === -1 ? inputArr.length : length;
+            if (inputArr.length < length){
+                const arr = window.utils.fillWithElements(inputArr, inputArr, length);
+                return arr.map(window.utils.generatePermutations)
+                    .reduce((r,a) => r.concat(a))
+            }
+            // source: https://stackoverflow.com/a/22063440
+            return inputArr.reduce(function permute(res, item, key, arr) {
+                return res.concat(arr.length > 1 && arr.slice(0, key).concat(arr.slice(key + 1)).reduce(permute, [])
+                        .map(function(perm) { return [item].concat(perm); }) || item);
+            }, []);
+        },
+        fillWithElements: function(initArr, possibleElements, length){
+            let ret = [];
+
+            function app(initArrs, length){
+                if (initArrs[0].length === length){
+                    return initArrs;
+                }
+                const newInitArrs = initArrs.map(initArr => possibleElements.map(e => {
+                    return initArr.concat([e]);
+                })).reduce((r, a) => r.concat(a), []);
+                return app(newInitArrs, length);
+            }
+            return app([initArr], length);
+        },
+        mod: function(number, divisor){
+            const m = number % divisor;
+            if (m < 0){
+                return m + divisor;
+            }
+            return m;
         }
     };
 
+    /**
+     * Generate the tab for a given chord
+     *
+     * @param {Chord|Note[]} chord
+     * @param {Note[]} tune tuning of each string
+     * @param {int} startFret
+     * @param {boolean} returnString
+     * @return {int[][]|String} finger positions from the lowest to the highest tuned string
+     */
+    function generateTabsForChord(chord, tune, startFret=0, returnString=true){
+
+        const stringNormKeys = tune.map(x => (x.key() + startFret) % 12);
+
+        function isTabPlayable(tab){
+            return tab.filter(x => x < 0 || x > 4).length === 0;
+        }
+
+        const tabs = [];
+
+        const searchedNormKeys = (chord instanceof Array ? chord : chord.notes()).map(x => x.key() % 12);
+        const perms = utils.generatePermutations(searchedNormKeys, tune.length);
+        //console.log(`Examine ${perms.length} possible tabs`);
+        for (let permNoteKeys of perms) {
+            // idea: try to place the first key in the array on the lowest tuned string, …
+            const tab = [];
+            for (let i = 0; i < permNoteKeys.length; i++){
+                tab.push(utils.mod(permNoteKeys[i] - stringNormKeys[i], 12));
+            }
+            if (isTabPlayable(tab)){
+                let alreadyStored = false;
+                for (let otherTab of tabs) {
+                    let equal = true;
+                    for (let i = 0; i < tab.length; i++){
+                        if (tab[i] !== otherTab[i]){
+                            equal = false;
+                            break;
+                        }
+                    }
+                    if (equal){
+                        alreadyStored = true;
+                        break;
+                    }
+                }
+                if (!alreadyStored) {
+                    tabs.push(tab);
+                }
+            }
+        }
+        if (returnString){
+            return tabs.map(tab => {
+                return tab.map(x => "" + x).join("")
+            }).join(" ");
+        }
+        return Array.from(tabs);
+    }
+
+    window.tunes.generateTabsForChord = generateTabsForChord;
+
+    /**
+     * Returns the notes from the lowest to the highest string for a particular tuning.
+     *
+     * @param {String} name name like "ukulele" or "guitar"
+     * @return {Note[]}
+     */
+    function tuningFromString(name){
+        return {
+            "ukulele": ["g", "c", "e", "a"],
+            "guitar": ["e", "b", "g", "d", "a", "e"]
+        }[name].map(x => teoria.note(x));
+    }
+
+    window.tunes.tuningFromString = tuningFromString;
+
     tunes.setFooter();
 
-    initAudio();
+    if (window.noAudio === undefined) {
+        initAudio();
 
-    setInterval(update, 200);
+        setInterval(update, 200);
+    }
 })();

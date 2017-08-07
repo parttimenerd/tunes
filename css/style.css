@@ -1,6 +1,7 @@
 body {
     font-family: Helvetica, sans-serif;
 }
+
 #task {
     width: 100%;
     text-align: center;
@@ -15,4 +16,14 @@ body {
     width: 100%;
     text-align: center;
     margin-top: 20px;
+}
+
+#frame {
+    text-align: center !important;
+    width: 100%;
+}
+
+#frame table {
+    margin-left: auto;
+    margin-right: auto;
 }

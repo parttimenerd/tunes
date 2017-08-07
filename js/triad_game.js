@@ -159,12 +159,15 @@
             const formatInterval = i => `${i.name()} (${i.halftones})`;
             const secondNote = MultiNoteGame._incrementNote(baseNote, style.firstInterval.halftones);
             const thirdNote = MultiNoteGame._incrementNote(secondNote, style.secondInterval.halftones);
-            const hint = `${utils.chooseArticle(style.name).toUpperCase()} ${style.name} triad`
+            const notes = [baseNote, secondNote, thirdNote];
+            const tabs = tunes.generateTabsForChord(notes, tunes.tuningFromString("ukulele"));
+            const hint = `${utils.chooseArticle(style.name, true)} ${style.name} triad `
                             + `consists of a base note followed `
-                            + `by a ${formatInterval(style.firstInterval)} and a ${formatInterval(style.secondInterval)}`;
+                            + `by a ${formatInterval(style.firstInterval)} and a ${formatInterval(style.secondInterval)}. `
+                            + `Possible ukulele tabs are ${tabs.split(" ").join(" and ")}.`;
             return new Task(`Play ${utils.chooseArticle(triadNameParts[0])}
                             <span class="note">${triadNameParts.join("")}</span> triad: NOTES`,
-                [baseNote, secondNote, thirdNote], hint);
+                notes, hint);
 
         }
     }

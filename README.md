@@ -29,6 +29,12 @@ Requires you to play the notes of a triad.
 *Located in triad.html*
 *[Play](http://mostlynerdless.de/tunes/triad.html)*
 
+Ukulele tabs
+------------
+A tool that generates tabs for a given chord.
+
+*Located in uke_tabs.html* *[Use](http://mostlynerdless.de/tunes/uke_tabs.html)* 
+
 License
 -------
 MIT
